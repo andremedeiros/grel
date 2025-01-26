@@ -1,0 +1,40 @@
+linters:
+  enable:
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - decorder
+    - dogsled
+    - durationcheck
+    - errcheck
+    - errname
+    - exhaustive
+    - gochecknoinits
+    - gocognit
+    - godot
+    - godox
+    - gofumpt
+    - gomoddirectives
+    - gosec
+    - gosimple
+    - grouper
+    - importas
+    - ineffassign
+    - nakedret
+    - nlreturn
+    - noctx
+    - paralleltest
+    - prealloc
+    - rowserrcheck
+    - sqlclosecheck
+    - staticcheck
+    - stylecheck
+    - tenv
+    - testpackage
+    - thelper
+    - unconvert
+    - unparam
+    - unused
+    - wsl
+  fast: true
+
