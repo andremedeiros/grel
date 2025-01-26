@@ -1,5 +1,6 @@
 package grel
 
+// Select is a struct that represents a SELECT statement.
 type Select struct {
 	Statement
 
@@ -11,6 +12,7 @@ type Select struct {
 	columnCache map[string]Column
 }
 
+// NewSelect creates a new SELECT statement.
 func NewSelect(table Table, columns ...Column) Select {
 	s := Select{
 		Statement: NewStatement(table),
@@ -28,6 +30,8 @@ func NewSelect(table Table, columns ...Column) Select {
 	return s
 }
 
+// Column adds a column to the SELECT statement. It will automatically assign columns to the main table if they don't
+// have a table reference.
 func (s Select) Column(column Column) Select {
 	if column.Table.Name == "" {
 		column.Table = s.Table
@@ -43,6 +47,7 @@ func (s Select) Column(column Column) Select {
 	return s
 }
 
+// Join adds a JOIN clause to the SELECT statement.
 func (s Select) Join(table Expression, joinType JoinType, on Expression) Select {
 	on = s.parameterizePredicate(on)
 	j := NewJoin(table, joinType, on)
@@ -51,6 +56,7 @@ func (s Select) Join(table Expression, joinType JoinType, on Expression) Select 
 	return s
 }
 
+// OrderBy adds an ORDER BY clause to the SELECT statement.
 func (s Select) OrderBy(order ...Order) Select {
 	for _, o := range order {
 		s.Order = append(s.Order, o)
@@ -59,12 +65,14 @@ func (s Select) OrderBy(order ...Order) Select {
 	return s
 }
 
+// Where adds a WHERE clause to the SELECT statement.
 func (s Select) Where(where Predicate) Select {
 	s.Predicate = s.parameterizePredicate(where)
 
 	return s
 }
 
+// SQL returns the SQL representation of the SELECT statement.
 func (s Select) SQL() string {
 	sql := "SELECT "
 

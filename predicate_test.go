@@ -55,3 +55,11 @@ func TestPredicate_SQL(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkPredicate_SQL(b *testing.B) {
+	p := grel.Eq(grel.NewColumn("id"), grel.NewValue(1))
+
+	for i := 0; i < b.N; i++ {
+		p.SQL()
+	}
+}

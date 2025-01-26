@@ -27,3 +27,19 @@ func TestTable_SQL(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkTable_SQL(b *testing.B) {
+	t := grel.Table{Name: "users"}
+
+	for i := 0; i < b.N; i++ {
+		t.SQL()
+	}
+}
+
+func BenchmarkTable_SQL_WithAlias(b *testing.B) {
+	t := grel.Table{Name: "users", Alias: "u"}
+
+	for i := 0; i < b.N; i++ {
+		t.SQL()
+	}
+}

@@ -66,3 +66,29 @@ func TestSelect_SQL(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkSelect_SQL_Simple(b *testing.B) {
+	s := grel.NewSelect(grel.Table{Name: "users"})
+
+	for i := 0; i < b.N; i++ {
+		s.SQL()
+	}
+}
+
+func BenchmarkSelect_SQL_WithOrder(b *testing.B) {
+	s := grel.NewSelect(grel.Table{Name: "users"}).
+		OrderBy(grel.NewOrder(grel.NewColumn("created_at"), grel.Descending))
+
+	for i := 0; i < b.N; i++ {
+		s.SQL()
+	}
+}
+
+func BenchmarkSelect_SQL_WithPredicate(b *testing.B) {
+	s := grel.NewSelect(grel.Table{Name: "users"}).
+		Where(grel.Eq(grel.NewColumn("users.id"), grel.NewValue(1)))
+
+	for i := 0; i < b.N; i++ {
+		s.SQL()
+	}
+}

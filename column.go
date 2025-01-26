@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Column represents a column in a table.
 type Column struct {
 	Expression
 
@@ -14,6 +15,7 @@ type Column struct {
 	Alias string
 }
 
+// NewColumn creates a new column.
 func NewColumn(name string) Column {
 	// Check if name is a table.column reference.
 	// If it is, split it into table and column.
@@ -27,10 +29,12 @@ func NewColumn(name string) Column {
 	return Column{Name: column}
 }
 
+// NewColumnWithAlias creates a new column with an alias.
 func NewColumnWithAlias(name, alias string) Column {
 	return Column{Name: name, Alias: alias}
 }
 
+// SQL returns the SQL representation of the column.
 func (c Column) SQL() string {
 	if c.Table.Name != "" {
 		return fmt.Sprintf("%s.%s", c.Table.SQL(), quoteColumn(c.Name))

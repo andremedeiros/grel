@@ -2,6 +2,7 @@ package grel
 
 import "fmt"
 
+// Statement represents a SQL statement.
 type Statement struct {
 	Expression
 
@@ -10,10 +11,12 @@ type Statement struct {
 	Parameters []interface{}
 }
 
+// SQL returns the SQL representation of the statement.
 func NewStatement(table Table) Statement {
 	return Statement{Table: table}
 }
 
+// SQL returns the SQL representation of the statement.
 func (s *Statement) parameterizePredicate(predicate Predicate) Predicate {
 	switch predicate.(type) {
 	case BinaryPredicate:

@@ -2,6 +2,7 @@ package grel
 
 import "fmt"
 
+// Predicate is the interface that wraps basic predicate type expressions.
 type Predicate interface {
 	Expression
 }
@@ -38,10 +39,12 @@ func (bo BinaryPredicate) SQL() string {
 	panic("unknown operator")
 }
 
+// Eq returns a new BinaryPredicate expression that compares equality.
 func Eq(left, right Expression) BinaryPredicate {
 	return BinaryPredicate{Operator: EqOperator, Left: left, Right: right}
 }
 
+// Neq returns a new BinaryPredicate expression that compares inequality.
 func Neq(left, right Expression) BinaryPredicate {
 	return BinaryPredicate{Operator: NeqOperator, Left: left, Right: right}
 }
